@@ -6,3 +6,6 @@ Installing Libraries
 All libraries should be included in the requirements.txt file.
 
 Install all using: pip install -r requirements.txt
+
+Run React App :D :
+npm start
