@@ -1,8 +1,8 @@
 import openai
+import os
 
 # Set your OpenAI API key
-openai.api_key = "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"
-
+openai.api_key = os.getenv("OPENAI_API_KEY")
 # Path to the MP3 file
 audio_file_path = "final_output.mp3"
 
