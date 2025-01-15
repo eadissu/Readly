@@ -1,37 +1,46 @@
-# File for managing the OpenAI API
-# Reference: https://github.com/edenhandom/mood-mix/blob/main/util/openai_client.py
+import openai
 import os
 from dotenv import load_dotenv
-import openai
 
-# Load environment variables from .env file
+# Load environment variables
 load_dotenv()
 
-# Get the API key from the environment
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+class OpenAIClient:
+    """
+    Handles interactions with the OpenAI API, including audio transcription.
+    """
 
-if not OPENAI_API_KEY:
-    print("Failed to load API key. Check your .env file.")
-else:
-    print("API key loaded successfully!")
+    def __init__(self, api_key):
+        if not api_key:
+            raise ValueError("API key is required.")
+        openai.api_key = api_key
 
-# Explicitly set the API key for the OpenAI library
-openai.api_key = OPENAI_API_KEY
+    def transcribe(self, audio_path, transcription_path="transcription.txt"):
+        """
+        Transcribes the given audio file using OpenAI's Whisper model.
 
-# Call OpenAI's ChatCompletion API
-try:
-    response = openai.ChatCompletion.create(
-        model="gpt-4",  # You can also use "gpt-3.5-turbo" for lower cost
-        messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": "What is Python used for?"}
-        ]
-    )
+        Args:
+            audio_path (str): Path to the audio file.
+            transcription_path (str): Path to save the transcription text file.
 
-    print("Response from ChatGPT:")
-    print(response["choices"][0]["message"]["content"])
+        Returns:
+            str: The transcribed text, or None if failed.
+        """
+        try:
+            with open(audio_path, "rb") as audio_file:
+                response = openai.Audio.transcribe(
+                    model="whisper-1",
+                    file=audio_file
+                )
 
-except openai.error.AuthenticationError:
-    print("Authentication failed: Check your API key.")
-except Exception as e:
-    print(f"An error occurred: {e}")
+            transcription = response.get("text", "")
+            print(f"Transcription: {transcription}")
+
+            with open(transcription_path, "w") as file:
+                file.write(transcription)
+                print(f"Transcription saved to {transcription_path}")
+
+            return transcription
+        except Exception as e:
+            print(f"An error occurred during transcription: {e}")
+            return None
