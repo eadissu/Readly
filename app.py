@@ -1,5 +1,9 @@
 # Reference: https://github.com/edenhandom/mood-mix/blob/main/app.py
 
+"""
+This main purpose of this file is to run the app. Call the backend things which include
+openA
+"""
 from flask import Flask, render_template, request, jsonify, send_file
 from gtts import gTTS
 import os
@@ -12,9 +16,25 @@ load_dotenv()
 app = Flask(__name__)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+
+    action = None
+    # Get the sentence
+
+    # Get the word
+    word = "Test"
+    
+
+    # Listening for button click
+    if request.method == 'POST':
+        action = request.form.get('action')
+
+    if action == "listen":
+        print("Word:" + word)
+    
+
+    return render_template('index.html', content = word)
 
 @app.route('/listen')
 def listen():

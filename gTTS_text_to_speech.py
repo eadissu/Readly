@@ -1,6 +1,11 @@
 from gtts import gTTS
 import os
 
+"""
+This file is for GTTS. No API calls needed because it is a library function. We need a function that
+takes in a sentence in text/text file and 
+"""
+
 # Define the sentence globally
 SENTENCE = "The cat sat on the mat."
 

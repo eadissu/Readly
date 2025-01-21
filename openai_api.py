@@ -2,6 +2,11 @@ import openai
 import os
 from dotenv import load_dotenv
 
+"""
+This file is for making api calls. It is for translating audio (mp3s) to text. It is for comparing 
+transcript(recorded text) to original text to see if they match. 
+"""
+
 
 # Load environment variables
 load_dotenv()
