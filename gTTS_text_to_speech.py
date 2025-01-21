@@ -1,19 +1,12 @@
 from gtts import gTTS
 import os
 
-"""
-This file is for GTTS. No API calls needed because it is a library function. We need a function that
-takes in a sentence in text/text file and 
-"""
-
-# Define the sentence globally
-SENTENCE = "The cat sat on the mat."
-
-def generate_speech(file_path="final_test2_output.mp3", play_audio=True):
+def generate_speech(word, file_path="word_audio.mp3", play_audio=True):
     """
-    Converts the predefined sentence to speech and saves it as an MP3 file.
+    Converts a given word to speech and saves it as an MP3 file.
 
     Args:
+        word (str): The word to convert to speech.
         file_path (str): The file path to save the MP3 file.
         play_audio (bool): Whether to play the audio file after saving.
 
@@ -21,7 +14,7 @@ def generate_speech(file_path="final_test2_output.mp3", play_audio=True):
         str: The path to the saved MP3 file, or None if failed.
     """
     try:
-        tts = gTTS(text=SENTENCE, lang='en')
+        tts = gTTS(text=word, lang='en')
         tts.save(file_path)
         print(f"Audio file saved as {file_path}")
 
